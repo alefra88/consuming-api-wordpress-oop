@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WordPress REST API</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="shortcut icon"
+      href="https://alefra88.github.io/portfolio-mar-2023/assets/ico.jpg?v=2"
+      type="image/x-icon"
+    />
+    <link
+      rel="favicon"
+      href="https://alefra88.github.io/portfolio-mar-2023/assets/ico.jpg?v=2"
+    />
+    <link rel="apple-touch-icon" href="./assets/ico.jpg" type="image/x-icon" />
+  </head>
+
+  <body>
+    <h1>WordPress REST API</h1>
+    <article id="site" class="site"></article>
+    <section id="posts" class="posts"></section>
+    <img
+      class="loader"
+      src="https://raw.githubusercontent.com/alefra88/Proyectos-DOM-JavaScript/d8db6f6012761ba766fa5fd07692037dee898e51/assets/loader.svg"
+      alt="Cargando..."
+    />
+    <template id="post-template">
+      <article class="post">
+        <img class="post-image" />
+        <aside>
+          <h2 class="post-title"></h2>
+          <figure class="post-author"></figure>
+          <small class="post-date"></small>
+          <a class="post-link" target="_blank">Ver publicación original</a>
+          <p class="post-excerpt"></p>
+          <div class="post-categories"></div>
+          <div class="post-tags"></div>
+          <details class="post-content">
+            <summary>Ver contenido de la publicación</summary>
+            <article></article>
+          </details>
+        </aside>
+      </article>
+      <hr />
+    </template>
+    <script src="app.js"></script>
+  </body>
+</html>
