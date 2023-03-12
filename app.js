@@ -1,4 +1,5 @@
 const d = document,
+  w = window,
   $site = d.getElementById("site"),
   $posts = d.getElementById("posts"),
   $loader = d.querySelector(".loader"),
@@ -10,6 +11,9 @@ const d = document,
   POSTS = `${API_WP}/posts?_embed`,
   PAGES = `${API_WP}/pages`,
   CATEGORIES = `${API_WP}/categories`;
+
+let page = 1,
+  perPage = 5;
 
 function getSiteData() {
   fetch(SITE)
@@ -34,7 +38,7 @@ function getSiteData() {
 
 function getPosts() {
   $loader.style.display = "block";
-  fetch(POSTS)
+  fetch(`${POSTS}&page=${page}&per_page=${perPage}`)
     .then((res) => (res.ok ? res.json() : Promise.reject(res)))
     .then((json) => {
       console.log(json);
@@ -51,8 +55,11 @@ function getPosts() {
 
         let $clone = $template.content.cloneNode(true);
         $clone.querySelector(".post-title").innerHTML = el.title.rendered;
-        $clone.querySelector(".post-image").src =
-          el._embedded["wp:featuredmedia"][0].source_url;
+        $clone.querySelector(".post-image").src = el._embedded[
+          "wp:featuredmedia"
+        ]
+          ? el._embedded["wp:featuredmedia"][0].source_url
+          : "";
         $clone.querySelector(".post-image").alt = el.title.rendered;
         $clone.querySelector(".post-title").innerHTML = el.title.rendered;
         $clone.querySelector(".post-author").innerHTML = `
@@ -95,6 +102,16 @@ function getPosts() {
 d.addEventListener("DOMContentLoaded", (e) => {
   getSiteData();
   getPosts();
+});
+
+w.addEventListener("scroll", (e) => {
+  const { scrollTop, clientHeight, scrollHeight } = d.documentElement;
+
+  if (scrollTop + clientHeight >= scrollHeight) {
+    console.log("Load more posts");
+    page++;
+    getPosts();
+  }
 });
 
 //POO
