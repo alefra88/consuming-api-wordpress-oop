@@ -11,7 +11,7 @@ const d = document,
   POSTS = `${API_WP}/posts?_embed`,
   PAGES = `${API_WP}/pages`,
   CATEGORIES = `${API_WP}/categories`;
-
+//variables para la paginacion infinita
 let page = 1,
   perPage = 5;
 
@@ -104,6 +104,7 @@ d.addEventListener("DOMContentLoaded", (e) => {
   getPosts();
 });
 
+//paginaciòn infinita
 w.addEventListener("scroll", (e) => {
   const { scrollTop, clientHeight, scrollHeight } = d.documentElement;
 
