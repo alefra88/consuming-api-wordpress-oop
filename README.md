@@ -1,1 +1,1 @@
-# consuming-api-wordpress-oop
+# consuming Wordpress API & rendering content from endpoints

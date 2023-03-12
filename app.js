@@ -38,14 +38,49 @@ function getPosts() {
     .then((res) => (res.ok ? res.json() : Promise.reject(res)))
     .then((json) => {
       console.log(json);
+
       json.forEach((el) => {
+        let categories = "",
+          tags = "";
+        el._embedded["wp:term"][0].forEach(
+          (el) => (categories += `<li>${el.name}</li>`)
+        );
+        el._embedded["wp:term"][1].forEach(
+          (el) => (tags += `<li>${el.name}</li>`)
+        );
+
         let $clone = $template.content.cloneNode(true);
+        $clone.querySelector(".post-title").innerHTML = el.title.rendered;
         $clone.querySelector(".post-image").src =
           el._embedded["wp:featuredmedia"][0].source_url;
         $clone.querySelector(".post-image").alt = el.title.rendered;
         $clone.querySelector(".post-title").innerHTML = el.title.rendered;
+        $clone.querySelector(".post-author").innerHTML = `
+  <img src= "${el._embedded.author[0].avatar_urls?.["48"] || ""}" alt="${
+          el._embedded.author[0].avatar_urls?.["48"] || ""
+        }">
+  <figcaption>${el._embedded.author[0].name}</figcaption>
+`;
+        $clone.querySelector(".post-date").innerHTML = new Date(
+          el.date
+        ).toLocaleDateString();
+        $clone.querySelector(".post-link").href = el.link;
+        $clone.querySelector(".post-excerpt").innerHTML =
+          el.excerpt.rendered.replace("[&hellip;]", "...");
+
+        $clone.querySelector(".post-categories").innerHTML = `
+          <p>Categorias</p>
+          <ul>${categories}</ul>
+          `;
+        $clone.querySelector(".post-tags").innerHTML = `
+          <p>Etiquetas</p>
+          <ul>${tags}</ul>
+          `;
+        $clone.querySelector(".post-content > article").innerHTML =
+          el.content.rendered;
         $fragment.appendChild($clone);
       });
+
       $posts.appendChild($fragment);
       $loader.style.display = "none";
     })
