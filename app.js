@@ -109,15 +109,16 @@ d.addEventListener("DOMContentLoaded", (e) => {
 
 //   getPosts() {
 //     this.$loader.style.display = "block";
-//     if (!this.$posts) return;
 //     fetch(this.POSTS)
 //       .then((res) => (res.ok ? res.json() : Promise.reject(res)))
 //       .then((json) => {
 //         console.log(json);
 //         json.forEach((el) => {
-//           let $template = this.$template.cloneNode(true);
-//           $template.querySelector(".post-title").innerHTML = el.title.rendered;
-//           let $clone = document.importNode($template.content, true);
+//           let $clone = this.$template.content.cloneNode(true);
+//           $clone.querySelector(".post-image").src =
+//             el._embedded["wp:featuredmedia"][0].source_url;
+//           // clone.querySelector(".post-image").alt = el.title.rendered;
+//           $clone.querySelector(".post-title").innerHTML = el.title.rendered;
 //           this.$fragment.appendChild($clone);
 //         });
 //         // Insertar el fragmento completo después del bucle forEach
